@@ -1,0 +1,58 @@
+
+# 服务配置
+server:
+  port: 8080
+
+
+logging:
+  level:
+    root: info
+    com.sirius.**.repository: debug
+
+
+# Spring相关配置
+spring:
+  servlet:
+    multipart:
+      # 单个文件的最大值
+      max-request-size: 1024MB
+      # 上传文件总的最大值
+      max-file-size: 1024MB
+    application:
+      name: sirius-cloud
+
+  ##数据库连接信息
+  datasource:
+    url: jdbc:mysql://localhost:3306/vul-wall-db?useUnicode=true&characterEncoding=utf-8&useSSL=false&autoReconnect=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: zyl8178
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      minimum-idle: 3
+      maximum-pool-size: 20
+      max-lifetime: 180000
+      initialization-fail-timeout: 60000
+      validation-timeout: 30000
+      idle-timeout: 30000
+    xa:
+      properties:
+        pinGlobalTxToPhysicalConnection: true
+        useServerPrepStmts: true
+
+thymeleaf:
+  mode: HTML
+  encoding: utf-8
+  # 禁用缓存
+  cache: false
+
+  mvc:
+    # 静态资源路径
+    static-path-pattern: /static/**
+    # 参考配置https://www.cnblogs.com/liaojie970/p/8857710.html
+
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  type-aliases-package: com.sirius.**.repository.entity
+
+
+

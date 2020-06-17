@@ -1,0 +1,29 @@
+# 服务配置
+server:
+  port: 8080
+
+logging:
+  level:
+    root: info
+
+# Spring相关配置
+#spring:
+#  application:
+#    name: server-master
+
+eureka:
+  instance:
+    lease-expiration-duration-in-seconds: 30
+    lease-renewal-interval-in-seconds: 5
+    hostname: server-master
+  server:
+    enable-self-preservation: true
+    eviction-interval-timer-in-ms: 5000
+  client:
+    registerWithEureka: false    # 是否注册到eureka服务器 registerWithEureka = false fetchRegistry  说明自己的主
+    fetchRegistry: false   #  是否从eureka服务器获取注册信息
+    service-url:
+      defaultZone: http://localhost:8080/eureka/
+
+
+

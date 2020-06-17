@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sirius.user.repository.UserDao">
+    <resultMap id="UserMapper" type="com.sirius.user.repository.entity.User">
+        <id column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="password" property="password" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="name" property="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="group_id" property="groupId" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="email" property="email" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="access_key" property="accessKey" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="authority" property="authority" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="register_time" property="registerTime" javaType="java.lang.Long" jdbcType="BIGINT"/>
+
+    </resultMap>
+
+
+    <sql id="U_Prefix_Column_List">
+        u.id, user_id AS userId, password, name,
+          group_id AS groupId, email ,
+        access_key AS accessKey,
+        authority, phone,
+        register_time AS registerTime
+    </sql>
+
+    <sql id="Base_Column_List">
+        id, user_id AS userId, password, name,
+          group_id AS groupId, email ,
+        access_key AS accessKey,
+        authority, phone,
+        register_time AS registerTime
+    </sql>
+
+    <select id="queryByAccount"
+            resultType="com.sirius.user.repository.entity.User">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM `user`
+        WHERE email = #{account,jdbcType=VARCHAR}
+        OR phone = #{account,jdbcType=VARCHAR}
+    </select>
+
+<!--    <select id="queryByAccessKey"-->
+<!--            resultType="com.zyl.vul.user.repository.entity.User">-->
+<!--        SELECT-->
+<!--        <include refid="Base_Column_List"/>-->
+<!--        FROM `user` WHERE access_key = #{accessKey,jdbcType=VARCHAR}-->
+<!--    </select>-->
+
+<!--    <select id="queryByUserId"-->
+<!--            resultType="com.zyl.vul.user.repository.entity.User">-->
+<!--        SELECT-->
+<!--        <include refid="Base_Column_List"/>-->
+<!--        FROM `user` WHERE user_id = #{userId,jdbcType=VARCHAR}-->
+<!--    </select>-->
+
+
+<!--    <select id="queryByPhone"-->
+<!--            resultType="com.zyl.vul.user.repository.entity.User">-->
+<!--        SELECT-->
+<!--        <include refid="Base_Column_List"/>-->
+<!--        FROM `user` WHERE phone = #{phone,jdbcType=VARCHAR}-->
+<!--    </select>-->
+
+<!--    <select id="queryUserPage"-->
+<!--            resultMap="UserMapper">-->
+<!--        SELECT-->
+<!--        u.*-->
+<!--        FROM `user` u-->
+<!--        LEFT JOIN `user_group` ug on u.group_id = ug.group_id-->
+<!--        <where>-->
+<!--            ug.group_id = #{page.userGroupId}-->
+<!--            <if test="page.userName != null">-->
+<!--                AND u.name like CONCAT('%', #{page.userName,jdbcType=VARCHAR}, '%')-->
+<!--            </if>-->
+<!--            <if test="page.authority != null">-->
+<!--                AND u.authority like CONCAT('%', #{page.authority,jdbcType=VARCHAR}, '%')-->
+<!--            </if>-->
+<!--        </where>-->
+<!--        <if test="page.sortKey == null">-->
+<!--            order by register_time desc-->
+<!--        </if>-->
+<!--        <if test="page.sortKey != null">-->
+<!--            ORDER BY ${page.sortKey}-->
+<!--            <if test="page.sortVal == 'ascend'">ASC</if>-->
+<!--            <if test="page.sortVal == 'descend'">DESC</if>-->
+<!--        </if>-->
+<!--        LIMIT #{page.index}, #{page.pageSize}-->
+<!--    </select>-->
+
+
+<!--    <select id="queryTotal"-->
+<!--            resultType="java.lang.Integer">-->
+<!--        SELECT-->
+<!--        count(u.id)-->
+<!--        FROM `user` u-->
+<!--        LEFT JOIN `user_group` ug on u.group_id = ug.group_id-->
+<!--        <where>-->
+<!--            ug.group_id = #{page.userGroupId}-->
+<!--            <if test="page.userName != null">-->
+<!--                AND u.name like CONCAT('%', #{page.userName,jdbcType=VARCHAR}, '%')-->
+<!--            </if>-->
+<!--            <if test="page.authority != null">-->
+<!--                AND u.authority like CONCAT('%', #{page.authority,jdbcType=VARCHAR}, '%')-->
+<!--            </if>-->
+<!--        </where>-->
+<!--    </select>-->
+
+<!--    <update id="updateAuthority" parameterType="com.zyl.vul.user.repository.entity.User">-->
+<!--        UPDATE project SET-->
+<!--        <trim prefix="" suffix="" suffixOverrides=",">-->
+<!--            <if test="authority != null">-->
+<!--                authority = #{authority,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--        </trim>-->
+<!--        WHERE user_id = #{userId,jdbcType=VARCHAR}-->
+<!--    </update>-->
+
+<!--    <update id="updatePassword" parameterType="com.zyl.vul.user.repository.entity.User">-->
+<!--        UPDATE project SET-->
+<!--        <trim prefix="" suffix="" suffixOverrides=",">-->
+<!--            <if test="password != null">-->
+<!--                password = #{password,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--        </trim>-->
+<!--        WHERE user_id = #{userId,jdbcType=VARCHAR}-->
+<!--    </update>-->
+
+<!--    <update id="update" parameterType="com.zyl.vul.user.repository.entity.User">-->
+<!--        UPDATE project SET-->
+<!--        <trim prefix="" suffix="" suffixOverrides=",">-->
+<!--            <if test="name != null">-->
+<!--                name = #{name,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="groupId != null">-->
+<!--                group_id = #{groupId,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="phone != null">-->
+<!--                phone = #{phone,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="email != null">-->
+<!--                email = #{email,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="accessKey != null">-->
+<!--                access_key = #{accessKey,jdbcType=VARCHAR}-->
+<!--            </if>-->
+<!--        </trim>-->
+<!--        WHERE user_id = #{userId,jdbcType=VARCHAR}-->
+<!--    </update>-->
+
+
+<!--    <insert id="save" parameterType="com.zyl.vul.user.repository.entity.User">-->
+<!--        INSERT INTO `user`-->
+<!--        <trim prefix="(" suffix=")" suffixOverrides=",">-->
+<!--            <if test="userId != null">-->
+<!--                user_id,-->
+<!--            </if>-->
+<!--            <if test="password != null">-->
+<!--                password,-->
+<!--            </if>-->
+<!--            <if test="name != null">-->
+<!--                name,-->
+<!--            </if>-->
+<!--            <if test="groupId != null">-->
+<!--                group_id,-->
+<!--            </if>-->
+<!--            <if test="email != null">-->
+<!--                email,-->
+<!--            </if>-->
+<!--            <if test="accessKey != null">-->
+<!--                access_key,-->
+<!--            </if>-->
+<!--            <if test="phone != null">-->
+<!--                phone,-->
+<!--            </if>-->
+<!--            <if test="authority != null">-->
+<!--                authority,-->
+<!--            </if>-->
+<!--            <if test="registerTime != null">-->
+<!--                register_time-->
+<!--            </if>-->
+<!--        </trim>-->
+<!--        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">-->
+<!--            <if test="userId != null">-->
+<!--                #{userId,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="password != null">-->
+<!--                #{password,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="name != null">-->
+<!--                #{name,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="groupId != null">-->
+<!--                #{groupId,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="email != null">-->
+<!--                #{email,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="accessKey != null">-->
+<!--                #{accessKey,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="phone != null">-->
+<!--                #{phone,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="authority != null">-->
+<!--                #{authority,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="registerTime != null">-->
+<!--                #{registerTime,jdbcType=BIGINT}-->
+<!--            </if>-->
+
+<!--        </trim>-->
+<!--    </insert>-->
+
+
+<!--    <delete id="delete" parameterType="String">-->
+<!--		DELETE FROM user WHERE user_id = #{userId}-->
+<!--	</delete>-->
+
+
+</mapper>
